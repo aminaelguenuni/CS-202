@@ -5,12 +5,37 @@ class DequeApp
    {
    public static void main(String[] args) 
       {
-      //add code to test all the methods in the Deque class
-      //test everthing 
-      //first insertRight
-      //display 
-      //print removeright 
-      //remove right wrap around case
+            Deque deque = new Deque(5);
+        
+            deque.insertRight(10);
+            deque.insertRight(20);
+            deque.insertRight(30);
+            deque.display(); 
+        
+            deque.insertLeft(5);
+            deque.insertLeft(1);
+            deque.display(); 
+        
+            System.out.println("Removed from left: " + deque.removeLeft());
+            deque.display(); 
+        
+            System.out.println("Removed from right: " + deque.removeRight()); 
+            deque.display(); 
+        
+            System.out.println("Is deque empty? " + deque.isEmpty()); 
+            System.out.println("Is deque full? " + deque.isFull()); 
+            //wrapper arround case testing
+
+            deque.insertRight(40);
+            deque.insertRight(50);
+            deque.insertRight(60);
+            deque.display(); 
+    
+            System.out.println("Removed from left: " + deque.removeLeft()); 
+            deque.display(); 
+    
+            System.out.println("Is deque empty? " + deque.isEmpty()); 
+            System.out.println("Is deque full? " + deque.isFull()); 
 
       }  
 
@@ -46,8 +71,11 @@ class Deque
 //--------------------------------------------------------------
    public void insertRight(int j) // put item at right of deque
       {
-         //study left and do the opposite it
-
+        if (right == maxSize - 1) { 
+            right = -1;
+        }
+        dekArray[++right] = j; 
+        nItems++; 
       
       }
 //--------------------------------------------------------------
@@ -62,27 +90,37 @@ class Deque
 //--------------------------------------------------------------
    public int removeRight()    // take item from right of deque
       {
-         return 5;
-      
+      int temp = dekArray[right--]; 
+      if (right == -1) { 
+        right = maxSize - 1;
+      }
+      nItems--; 
+      return temp;      
       }
 //--------------------------------------------------------------
    public boolean isEmpty()    // true if deque is empty
       { 
-         return true;
+         return nItems==0;
        }
 //--------------------------------------------------------------
-   public boolean isFull()     // true if deque is full
+   public boolean isFull()     
       { 
-         return true;
-       }
+         return nItems == maxSize;
+      }
 //--------------------------------------------------------------
    public int size()           // number of items in deque
       { 
-         return 5;
+         return nItems;
       }
 //--------------------------------------------------------------
    public void display()
       {
+      int index = left;
+      for (int i = 0; i < nItems; i++) {
+        System.out.print(dekArray[index] + " ");
+        index = (index + 1) % maxSize; // handle wrap-around cases
+      }
+      System.out.println();
       
       }  
 //--------------------------------------------------------------
